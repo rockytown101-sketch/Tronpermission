@@ -1,0 +1,77 @@
+name: Build TRON Permission Desktop
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        working-directory: tron-permission-desktop
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Windows
+        run: npm run dist:win
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: TRON-Permission-Control-Windows
+          path: |
+            tron-permission-desktop/dist/*.exe
+            tron-permission-desktop/dist/*.yml
+
+
+  build-macos:
+    name: Build macOS
+    runs-on: macos-latest
+
+    defaults:
+      run:
+        working-directory: tron-permission-desktop
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build macOS
+        run: npm run dist:mac
+
+      - name: Upload macOS installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: TRON-Permission-Control-macOS
+          path: |
+            tron-permission-desktop/dist/*.dmg
+            tron-permission-desktop/dist/*.zip
+            tron-permission-desktop/dist/*.yml
