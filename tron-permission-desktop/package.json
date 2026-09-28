@@ -1,0 +1,30 @@
+{
+  "name": "tron-permission-control-desktop",
+  "version": "0.1.0",
+  "description": "Desktop TRON permission request console for TronLink, TokenPocket and imToken.",
+  "main": "src/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "dist:win": "electron-builder --win nsis portable",
+    "dist:mac": "electron-builder --mac dmg zip",
+    "dist:all": "electron-builder --win nsis portable --mac dmg zip"
+  },
+  "dependencies": {
+    "tronweb": "6.5.1"
+  },
+  "devDependencies": {
+    "electron": "38.2.0",
+    "electron-builder": "26.0.12"
+  },
+  "build": {
+    "appId": "com.tronpermission.control",
+    "productName": "TRON Permission Control",
+    "asar": true,
+    "files": ["src/**/*", "package.json", "assets/**/*"],
+    "mac": {"target": ["dmg", "zip"], "category": "public.app-category.finance"},
+    "win": {"target": ["nsis", "portable"], "artifactName": "TRON-Permission-Control-${version}-${os}-${arch}.${ext}"},
+    "nsis": {"oneClick": false, "allowToChangeInstallationDirectory": true}
+  }
+}
